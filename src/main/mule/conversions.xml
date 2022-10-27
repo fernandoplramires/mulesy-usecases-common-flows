@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="convert-base64-to-image-png-flow" doc:id="d60ffbb1-2559-4d7c-8354-5adbe851d642" >
+		<ee:transform doc:name="Convert Base64 to Binary" doc:id="42115ca1-0453-40c1-b46e-9bf4dd2878c5">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/octet-stream
+---
+dw::core::Binaries::fromBase64(payload.imageRequestData.base64String)]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<set-payload value="#[payload]" doc:name="Mime Type to Image/PNG" doc:id="c4ce3a71-ae20-4543-9ec0-71d8b24799ad" mimeType="image/png" />
+	</flow>
+</mule>
